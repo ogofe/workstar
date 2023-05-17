@@ -1,0 +1,12 @@
+.wf-force-outline-none[tabindex="-1"]:focus {
+  outline: none;
+}
+
+.work-cta {
+  padding: 15px;
+  background: cornflowerblue;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  max-width: 300px;
+}
