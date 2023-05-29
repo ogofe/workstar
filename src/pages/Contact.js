@@ -23,22 +23,25 @@ export const ContactPage = () => {
         }
 
         
-        const res = await fetch('https://workstar.pythonanywhere.com/api/contact-us/', {
-            method: 'post',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                name,
-                email,
-                subject,
-                message
+        try{
+            
+            const res = await fetch('https://workstar.pythonanywhere.com/api/contact-us/', {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    subject,
+                    message
+                })
             })
-        })
 
-        if (res.ok){
-            setEmail(""); setMessage(""); setName(""); setSubject("")
-            alert("Your message has been received! We'll get back to you soon.")
+            if (res.ok){
+                setEmail(""); setMessage(""); setName(""); setSubject("")
+                alert("Your message has been received! We'll get back to you soon.")
+            }
         }
 
         // const formData = new FormData(formRef.current);
