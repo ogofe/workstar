@@ -1,11 +1,28 @@
 import {useRef, useState} from 'react';
 import {useNavigate} from 'react-router-dom'
 
+const countriesData = {
+"us": [
+    "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida",
+    "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
+    "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska",
+    "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio",
+    "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas",
+    "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
+],
+"canada": [
+    "Alberta", "British Columbia", "Manitoba", "New Brunswick", "Newfoundland and Labrador", "Northwest Territories",
+    "Nova Scotia", "Nunavut", "Ontario", "Prince Edward Island", "Quebec", "Saskatchewan", "Yukon"
+]
+};
+  
+
 export const RecruitmentPage = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
+    const [country, setCountry] = useState("us");
     const [state, setState] = useState("");
     const [city, setCity] = useState("");
     const [address, setAddress] = useState("");
@@ -43,13 +60,11 @@ export const RecruitmentPage = () => {
                     lastName,
                     email,
                     phone,
+                    country,
                     state,
                     city,
                     zip,
                     address,
-                    idType,
-                    idImageFront,
-                    idImageBack
                 })
             })
     
@@ -68,22 +83,22 @@ export const RecruitmentPage = () => {
                 <div>
                     <div>
                         <label for="fName" class="field-text">First Name:</label>
-                        <input onInput={ev => setFirstName(ev.target.value)} value={firstName} type="text" class="text-field w-input" maxlength="256" name="fName" data-name="fName" placeholder="" id="fName" required=""/>
+                        <input onInput={ev => setFirstName(ev.target.value)} value={firstName} type="text" class="text-field w-input" maxlength="256" name="fName" required=""/>
                     </div>
 
                     <div>
-                        <label for="Name-7" class="field-text">Last Name:</label>
-                        <input onInput={ev => setLastName(ev.target.value)} value={lastName} type="text" class="text-field w-input" maxlength="256" name="lName" data-name="lName" placeholder="" id="lName" required=""/>
+                        <label for="lName" class="field-text">Last Name:</label>
+                        <input onInput={ev => setLastName(ev.target.value)} value={lastName} type="text" class="text-field w-input" maxlength="256" name="lName" required=""/>
                     </div>
 
                     <div>
-                        <label for="Email-Address" class="field-text">Email address:</label>
-                        <input onInput={ev => setEmail(ev.target.value)} value={email} type="email" class="text-field w-input" maxlength="256" name="Email-Address" data-name="Email Address" placeholder="" id="Email-Address" required=""/>
+                        <label for="email" class="field-text">Email address:</label>
+                        <input onInput={ev => setEmail(ev.target.value)} value={email} type="email" class="text-field w-input" maxlength="256" name="email" required=""/>
                     </div>
 
                     <div>
-                        <label for="Phone" class="field-text">Phone Number:</label>
-                        <input onInput={ev => setPhone(ev.target.value)} value={phone} type="tel" class="text-field w-input" maxlength="256" name="phone" data-name="Phone" placeholder="" id="phone" required=""/>
+                        <label for="phone" class="field-text">Phone Number:</label>
+                        <input onInput={ev => setPhone(ev.target.value)} value={phone} type="tel" class="text-field w-input" maxlength="256" name="phone" id="phone" required=""/>
                     </div>
 
                 </div>
@@ -94,43 +109,36 @@ export const RecruitmentPage = () => {
             return(
                 <div>
                     <div>
+                        <label for="state" class="field-text">Country of Residence:</label>
+                        <select onInput={ev => setCountry(ev.target.value)} value={country} type="text" class="text-field w-input" maxlength="256" name="country" required="">
+                            <option value={"us"}>United States of America</option>
+                            <option value={"canada"}>Canada</option>
+                        </select>
+                    </div>
+
+                    <div>
                         <label for="state" class="field-text">State of Residence:</label>
-                        <input onInput={ev => setState(ev.target.value)} value={state} type="text" class="text-field w-input" maxlength="256" name="state" data-name="state" placeholder="" id="state" required=""/>
+                        <select onInput={ev => setState(ev.target.value)} value={state} type="text" class="text-field w-input" maxlength="256" name="country" required="">
+                            <option selected>Choose your state</option>
+                            {countriesData[country].map((_state) => 
+                                <option value={_state}>{_state}</option>
+                            )}
+                        </select>
                     </div>
 
                     <div>
                         <label for="city" class="field-text">City:</label>
-                        <input onInput={ev => setCity(ev.target.value)} value={city} type="text" class="text-field w-input" maxlength="256" name="city" data-name="city" placeholder="" id="city" required=""/>
+                        <input onInput={ev => setCity(ev.target.value)} value={city} type="text" class="text-field w-input" maxlength="256" name="city" required=""/>
                     </div>
 
                     <div>
                         <label for="address" class="field-text"> Address:</label>
-                        <input onInput={ev => setAddress(ev.target.value)} value={address} type="text" class="text-field w-input" maxlength="256" name="address" data-name="address" placeholder="" id="address" required=""/>
+                        <input onInput={ev => setAddress(ev.target.value)} value={address} type="text" class="text-field w-input" maxlength="256" name="address" required=""/>
                     </div>
 
                     <div>
                         <label for="zip" class="field-text"> Zip Code:</label>
                         <input onInput={ev => setZip(ev.target.value)} value={zip} type="text" class="text-field w-input" maxlength="256" name="zip" data-name="zip" placeholder="" id="zip" required=""/>
-                    </div>
-
-                    <div>
-                        <label for="id-type" class="field-text">Id Type:</label>
-                        <select onInput={ev => setIdType(ev.target.value)} value={idType} class="text-field w-input" maxlength="256" name="id-type" data-name="id-type" placeholder="" id="id-type" required="">
-                            <option disabled> Select Id Type </option>
-                            <option> Driver's License </option>
-                            <option> International Passport </option>
-                            <option> Voter's Card </option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="id-image-front" class="field-text">Id Front Image:</label>
-                        <ImageUploaderField onInput={(img) => setIdImageFront(img)} name="id-image-front" />
-                    </div>
-
-                    <div>
-                        <label for="id-image-back" class="field-text">Id Back Image:</label>
-                        <ImageUploaderField onInput={(img) => setIdImageBack(img)} name="id-image-back" />
                     </div>
 
                 </div>
@@ -142,6 +150,8 @@ export const RecruitmentPage = () => {
                 <div>
                     <div>
                         <h2> We've received your application, you'll hear from us soon! </h2>
+
+                        <h5 className='text-black'> If you are not automatically redirected, please go to the Home link or close this tab.</h5>
                     </div>
                 </div>
             )
@@ -154,7 +164,7 @@ export const RecruitmentPage = () => {
                 <div class="container">
                     <div class="hero-info one">
                         <h1 class="big-headline">Join us</h1>
-                        <p class="big-paragraph">Work for us and join our network of hardworking individuals helping businesses thrive in the US</p>
+                        <p class="big-paragraph">Work for us and join our network of hardworking individuals helping businesses thrive accross the US & Canada</p>
                     </div>
                     <div class="w-layout-grid image-header-grid">
                         <div class="image-header bigger"></div>
@@ -178,10 +188,11 @@ export const RecruitmentPage = () => {
                             </h1>
                             <div class="avatar"></div>
                         </div>
+
                         <div class="contact-content">
                             <div class="form-div">
                                 <div class="form-block w-form">
-                                    <form ref={formRef} id="reg-form" onSubmit={(event) => {
+                                    <form method='post' ref={formRef} id="reg-form" onSubmit={(event) => {
                                         event.preventDefault();
                                     }}>
                                         {renderForm()}
@@ -197,8 +208,7 @@ export const RecruitmentPage = () => {
                                                         setFormStep((formStep+1))
                                                     }
                                                 }}
-                                                type="submit" form='reg-form'
-                                                data-wait="Please wait..."
+                                                type="submit"
                                                 class="button w-button"> Continue </button>
                                             </div>
                                         }
