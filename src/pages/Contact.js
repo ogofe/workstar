@@ -42,6 +42,8 @@ export const ContactPage = () => {
                 setEmail(""); setMessage(""); setName(""); setSubject("")
                 alert("Your message has been received! We'll get back to you soon.")
             }
+        }catch(err){
+            console.log(err)
         }
 
         // const formData = new FormData(formRef.current);

@@ -31,30 +31,34 @@ export const RecruitmentPage = () => {
         if(phone === ""){
             return alert("Please type your message")
         }
-        
-        const formData = new FormData(formRef.current);
-        formData.append('firstName', firstName)
-        formData.append('lastName', lastName)
-        formData.append('email', email)
-        formData.append('state', state)
-        formData.append('city', city)
-        formData.append('zip', zip)
-        formData.append('idType', idType)
-        formData.append('address', address)
-        formData.append('idImageFront', idImageFront)
-        formData.append('idImageBack', idImageBack)
-        console.log("Form:", formData)
-        const res = await fetch('https://workstar.pythonanywhere.com/api/work-for-us/', {
-            method: 'post',
-            headers: {
-                "Content-Type": "multipart/form-data"
-            },
-            body: formData
-        })
+        try {
 
-        if (res.ok){
-            alert("Your details has been received! We'll get back to you soon.")
-            router('/')
+            const res = await fetch('https://workstar.pythonanywhere.com/api/work-for-us/', {
+                method: 'post',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstName,
+                    lastName,
+                    email,
+                    phone,
+                    state,
+                    city,
+                    zip,
+                    address,
+                    idType,
+                    idImageFront,
+                    idImageBack
+                })
+            })
+    
+            if (res.ok){
+                alert("Your details has been received! We'll get back to you soon.")
+                router('/')
+            }
+        }catch(error){
+            console.log("Error saving details...", error)
         }
     }
 
@@ -63,13 +67,13 @@ export const RecruitmentPage = () => {
             return(
                 <div>
                     <div>
-                        <label for="Name-7" class="field-text">First Name:</label>
-                        <input onInput={ev => setFirstName(ev.target.value)} value={firstName} type="text" class="text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="" id="Name" required=""/>
+                        <label for="fName" class="field-text">First Name:</label>
+                        <input onInput={ev => setFirstName(ev.target.value)} value={firstName} type="text" class="text-field w-input" maxlength="256" name="fName" data-name="fName" placeholder="" id="fName" required=""/>
                     </div>
 
                     <div>
                         <label for="Name-7" class="field-text">Last Name:</label>
-                        <input onInput={ev => setLastName(ev.target.value)} value={lastName} type="text" class="text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="" id="Name" required=""/>
+                        <input onInput={ev => setLastName(ev.target.value)} value={lastName} type="text" class="text-field w-input" maxlength="256" name="lName" data-name="lName" placeholder="" id="lName" required=""/>
                     </div>
 
                     <div>
@@ -78,8 +82,8 @@ export const RecruitmentPage = () => {
                     </div>
 
                     <div>
-                        <label for="Email-Address" class="field-text">Phone Number:</label>
-                        <input onInput={ev => setPhone(ev.target.value)} value={phone} type="email" class="text-field w-input" maxlength="256" name="Email-Address" data-name="Email Address" placeholder="" id="Email-Address" required=""/>
+                        <label for="Phone" class="field-text">Phone Number:</label>
+                        <input onInput={ev => setPhone(ev.target.value)} value={phone} type="tel" class="text-field w-input" maxlength="256" name="phone" data-name="Phone" placeholder="" id="phone" required=""/>
                     </div>
 
                 </div>
@@ -90,28 +94,28 @@ export const RecruitmentPage = () => {
             return(
                 <div>
                     <div>
-                        <label for="Name-7" class="field-text">State of Residence:</label>
-                        <input onInput={ev => setState(ev.target.value)} value={state} type="text" class="text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="" id="Name" required=""/>
+                        <label for="state" class="field-text">State of Residence:</label>
+                        <input onInput={ev => setState(ev.target.value)} value={state} type="text" class="text-field w-input" maxlength="256" name="state" data-name="state" placeholder="" id="state" required=""/>
                     </div>
 
                     <div>
-                        <label for="Name-7" class="field-text">City:</label>
-                        <input onInput={ev => setCity(ev.target.value)} value={city} type="text" class="text-field w-input" maxlength="256" name="Name" data-name="Name" placeholder="" id="Name" required=""/>
+                        <label for="city" class="field-text">City:</label>
+                        <input onInput={ev => setCity(ev.target.value)} value={city} type="text" class="text-field w-input" maxlength="256" name="city" data-name="city" placeholder="" id="city" required=""/>
                     </div>
 
                     <div>
                         <label for="address" class="field-text"> Address:</label>
-                        <input onInput={ev => setAddress(ev.target.value)} value={address} type="text" class="text-field w-input" maxlength="256" name="address" data-name="Email Address" placeholder="" id="Email-Address" required=""/>
+                        <input onInput={ev => setAddress(ev.target.value)} value={address} type="text" class="text-field w-input" maxlength="256" name="address" data-name="address" placeholder="" id="address" required=""/>
                     </div>
 
                     <div>
                         <label for="zip" class="field-text"> Zip Code:</label>
-                        <input onInput={ev => setZip(ev.target.value)} value={zip} type="text" class="text-field w-input" maxlength="256" name="zip" data-name="Email Address" placeholder="" id="Email-Address" required=""/>
+                        <input onInput={ev => setZip(ev.target.value)} value={zip} type="text" class="text-field w-input" maxlength="256" name="zip" data-name="zip" placeholder="" id="zip" required=""/>
                     </div>
 
                     <div>
                         <label for="id-type" class="field-text">Id Type:</label>
-                        <select onInput={ev => setIdType(ev.target.value)} value={idType} class="text-field w-input" maxlength="256" name="id-type" data-name="Email Address" placeholder="" id="Email-Address" required="">
+                        <select onInput={ev => setIdType(ev.target.value)} value={idType} class="text-field w-input" maxlength="256" name="id-type" data-name="id-type" placeholder="" id="id-type" required="">
                             <option disabled> Select Id Type </option>
                             <option> Driver's License </option>
                             <option> International Passport </option>
@@ -129,6 +133,16 @@ export const RecruitmentPage = () => {
                         <ImageUploaderField onInput={(img) => setIdImageBack(img)} name="id-image-back" />
                     </div>
 
+                </div>
+            )
+        }
+
+        if (formStep === 3){
+            return(
+                <div>
+                    <div>
+                        <h2> We've received your application, you'll hear from us soon! </h2>
+                    </div>
                 </div>
             )
         }
@@ -167,20 +181,27 @@ export const RecruitmentPage = () => {
                         <div class="contact-content">
                             <div class="form-div">
                                 <div class="form-block w-form">
-                                    <form ref={formRef} id="contact-form" onSubmit={(event) => {
+                                    <form ref={formRef} id="reg-form" onSubmit={(event) => {
                                         event.preventDefault();
                                     }}>
                                         {renderForm()}
-                                        <div class="center-button-block" style={{marginTop: '3rem'}}>
-                                            <button onClick={(ev) => {
-                                                ev.preventDefault();
-                                                if(formStep === 3){
-                                                    // sendEmail();
-                                                }else{
-                                                    setFormStep((formStep+1))
-                                                }
-                                            }} type="submit" form='contact-form' data-wait="Please wait..." class="button w-button"> Continue </button>
-                                        </div>
+                                        {
+                                            formStep !== 3 && 
+                                            <div class="center-button-block" style={{marginTop: '3rem'}}>
+                                                <button onClick={(ev) => {
+                                                    ev.preventDefault();
+                                                    if(formStep === 2){
+                                                        sendEmail();
+                                                        setFormStep((3))
+                                                    }else{
+                                                        setFormStep((formStep+1))
+                                                    }
+                                                }}
+                                                type="submit" form='reg-form'
+                                                data-wait="Please wait..."
+                                                class="button w-button"> Continue </button>
+                                            </div>
+                                        }
                                     </form>
 
                                 </div>
@@ -197,7 +218,10 @@ export const RecruitmentPage = () => {
 const ImageUploaderField = ({ onInput, name, ...props }) =>{
     function uploadImage(ev){
         const img = ev.target.files[0]
-        onInput(img)
+        const reader = new FileReader()
+        reader.readAsDataURL(img)
+        onInput(reader.result)
+        // onInput(img)
     }
 
 
